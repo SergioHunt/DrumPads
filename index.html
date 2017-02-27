@@ -41,12 +41,12 @@
   <canvas nx="meter"></canvas>
     
        <div id ="padArea">
-           <canvas nx="button"></canvas>
-           <canvas nx="button"></canvas>
-           <canvas nx="button"></canvas>
-           <canvas nx="button"></canvas>
-           <canvas nx="button"></canvas>
-           <canvas nx="button"></canvas>
+           <canvas nx="button" style="width:200px;height:200px"></canvas>
+           <canvas nx="button" style="width:200px;height:200px"></canvas>
+           <canvas nx="button" style="width:200px;height:200px"></canvas>
+           <canvas nx="button" style="width:200px;height:200px"></canvas>
+           <canvas nx="button" style="width:200px;height:200px"></canvas>
+           <canvas nx="button" style="width:200px;height:200px"></canvas>
            
                
            
@@ -61,9 +61,14 @@
   player1.connect(Tone.master);
   
         nx.onload = function() {
+          
+          
+          
                 button1.on('*', padActions);
                 button1.mode = "aftertouch";
-                button.setimage src
+          //Set button Image
+                button1.setImage("")
+                button1.setTouchImage("")
             }
 
 
