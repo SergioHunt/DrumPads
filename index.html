@@ -17,7 +17,7 @@
             body, html {
                 width: 100%;
                 height: 100%;
-                
+                background-color: rgb(0,200,200);
             }
             
                div#padArea {
@@ -31,12 +31,12 @@
             }
          
             canvas[nx="button"] {
-              button.setimage src 
+               
               
             }
        </style>
 </head>
-<body id="mainBody" width="100%" height="100%">
+<body id="mainBody">
        
   <canvas nx="meter"></canvas>
     
@@ -56,18 +56,27 @@
     
 </body>
 <script>
+  
+  var player1 = new Tone.Player("eddie.mp3");
+  player1.connect(Tone.master);
+  
         nx.onload = function() {
                 button1.on('*', padActions);
                 button1.mode = "aftertouch";
+                button.setimage src
             }
 
 
         var padActions = function(event) {
-          
+          if (button.val == 0){
+            
         }
+        else {
+            
+        }
+
         
         
-var player = new Tone.Player("eddie.mp3");
 
     
 </script>
