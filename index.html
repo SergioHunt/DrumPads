@@ -57,8 +57,11 @@
 </body>
 <script>
   
+  button1.on("click", ButtonClickActions)
+  
+  //set up player
   var player1 = new Tone.Player("eddie.mp3");
-  player1.connect(Tone.master);
+  player1.connect(Tone.master); //Connect player
   
         nx.onload = function() {
           
