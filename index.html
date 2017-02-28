@@ -56,12 +56,10 @@
   
   
   //set up player
-  var multiPlayer = new MultiPlayer({
+  var multiPlayer = new Tone.MultiPlayer({
 	"kick" : "path/to/kick.mp3",
 	"snare" : "path/to/snare.mp3",
-},      function(){
-	multiPlayer.start("kick");
-});
+  })
   
   
   .connect(Tone.Master); //Connect player
