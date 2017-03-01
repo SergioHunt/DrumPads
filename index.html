@@ -10,22 +10,25 @@
         
         <style>
             body, html {
+                
                 width: 100%;
                 height: 100%;
                 background-color: rgb(0,200,200);
+                padding-left:0px;
+
             }
         
         div#padArea {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 80%;
+            height: 100%;
             background-color: yellow;
             overflow: hidden;
-            padding:10px;
+            padding:0px;
             
-        }
-        
-        canvas[nx="meter"] {
-            visibility: hidden;
+            
         }
         
         canvas[nx="button"] {
@@ -36,7 +39,7 @@
     </head>
     <body id="mainBody">
         
-        <canvas nx="meter"></canvas>
+        
         
         <div id ="padArea">
             <canvas nx="button"></canvas>
@@ -57,16 +60,21 @@
     <script>
         
               //set up player
-        var player1 = new Tone.Player("Kit1/Kick 002 Knock.wav").toMaster();
-              
-<!--        var multiPlayer = new Tone.MultiPlayer({-->
-<!--           "kick" : "Kit1/Kick 002 Knock.wav",-->
-<!--           "snare" : "path/to/snare.mp3",-->
-<!--           })-->
+        var players = [];
+        
+        players[0] = new Tone.Player("samples/kit1/1.wav").toMaster();
+        
+<!--        var multiPlayer = new MultiPlayer({-->
+<!--                                          "kick" : "samples/kick.mp3",-->
+<!--                                          "snare" : "samples/snare.mp3",-->
+<!--                                          }, function(){-->
+<!--                                          multiPlayer.start("kick");-->
+<!--                                          });-->
+<!--            multiPlayer.connect(Tone.Master);-->
+<!--            multiPlayer.start(1);-->
+<!--           -->
+<!--           //.connect(Tone.Master); //Connect player-->
 
-           
-           //.connect(Tone.Master); //Connect player
-           
            nx.onload = function() {
                button1.on('*', xyActions);
                button1.on('*', pressActions);
@@ -74,12 +82,16 @@
            }
     
     
+    
+    
+    
+    
     var pressActions = function(event) {
         if (event.press == 1)
         {
             console.log("boop");
-            //multiPlayer.start("kick");
-            player1.start();
+            multiPlayer.start(1);
+            //player1.start();
         }
     }
     
