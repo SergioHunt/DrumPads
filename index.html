@@ -63,18 +63,11 @@
               //set up player
         var players = [];
         
-        players[0] = new Tone.Player("samples/kit1/1.wav").toMaster();
+      for(i=1; i <=9; i++){
+            players[i] = new Tone.Player("samples/kit1/1.wav").toMaster();
+        }
+
         
-<!--        var multiPlayer = new MultiPlayer({-->
-<!--                                          "kick" : "samples/kick.mp3",-->
-<!--                                          "snare" : "samples/snare.mp3",-->
-<!--                                          }, function(){-->
-<!--                                          multiPlayer.start("kick");-->
-<!--                                          });-->
-<!--            multiPlayer.connect(Tone.Master);-->
-<!--            multiPlayer.start(1);-->
-<!--           -->
-<!--           //.connect(Tone.Master); //Connect player-->
 
            nx.onload = function() {
                button1.on('*', xyActions);
