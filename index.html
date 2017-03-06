@@ -13,39 +13,33 @@
                 
                 width: 100%;
                 height: 100%;
-                background-color: rgb(0,200,200);
-                padding-left:0px;
+                background-color: rgb(100,200,200);
+                margin: 0;
+                padding: 0;
 
             }
         
         div#padArea {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
             width: 100%;
-            height: 100%;
-            background-color: yellow;
+            height: 80%;
+            background-color: #b0e0e6;
             overflow: hidden;
-            padding:0px;    
+            padding:0px;
+            
         }
         
-         div#controlBar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
+        div#controlBar {
+            border: 2px solid black;
+            
+            width: 50%;
+            height: 20%;
             background-color: grey;
             overflow: hidden;
-            padding:0px;    
-        }    
-            
-           
+        }
+        
         canvas[nx="button"] {
-            width: 33%;
-            height: 33%;
+            width: 30%;
+            height: 30%;
         }
         </style>
     </head>
@@ -54,6 +48,7 @@
         
         
         <div id ="padArea">
+            
             <canvas nx="button"></canvas>
             <canvas nx="button"></canvas>
             <canvas nx="button"></canvas>
@@ -66,44 +61,121 @@
             <canvas nx="button"></canvas>
             <canvas nx="button"></canvas>
         </div>
-        
+    
         <div id="controlBar">
-            <canvas nx="tabs"></canvas>
-        </div>
-        
+           <canvas nx="tabs"></canvas>
+       </div>
+
     </body>
     <script>
         
               //set up player
-        var players = [];
+        var player = [];
+        var buttons = [];
         
-      for(i=1; i <=9; i++){
-            players[i] = new Tone.Player("samples/kit1/1.wav").toMaster();
+        //fill array with elements.
+        for(var i=1; i<=9; i++) {
+            buttons[i] = document.getElementById("button"+i);
         }
-
+    /*
+       for(var i=1; i<=9; i++){
+            player[i] = new Tone.Player("samples/Kit" + i + "/" + i + ".wav").toMaster();
+       }
+      */
+    
+        //Temporary Player Setup code
+        player[1] = new Tone.Player("samples/Kit1/1.wav").toMaster();
+        player[2] = new Tone.Player("samples/Kit1/2.wav").toMaster();
+        player[3] = new Tone.Player("samples/kit1/3.wav").toMaster();
+        player[4] = new Tone.Player("samples/kit1/4.wav").toMaster();
+        player[5] = new Tone.Player("samples/kit1/5.wav").toMaster();
+        player[6] = new Tone.Player("samples/kit1/6.wav").toMaster();
+        player[7] = new Tone.Player("samples/kit1/7.wav").toMaster();
+        player[8] = new Tone.Player("samples/kit1/8.wav").toMaster();
+        player[9] = new Tone.Player("samples/kit1/9.wav").toMaster();
         
+        
+
 
            nx.onload = function() {
-               button1.on('*', xyActions);
-               button1.on('*', pressActions);
-               button1.mode = "aftertouch";
+               
+               for(var i=1; i<=9; i++) {
+                   buttons[i] = document.getElementById("button"+i);
+               }
+                    /*
+<!--               for(var i=1; i<=9; i++) {-->
+<!--                   buttons[i].on('*', xyActions);-->
+<!--                   buttons[i].on('*', pressActions);-->
+<!--               }-->
+*/
+            //set up Event listeners
+            button1.on('*', xyActions);
+            button1.on('*', function(btn){ playSoundFor(btn, 1); });
+            button1.mode = "aftertouch";
+            
+            button2.on('*', xyActions);
+            button2.on('*', function(btn){ playSoundFor(btn, 2); });
+            button2.mode = "aftertouch";
+            
+            button3.on('*', xyActions);
+            button3.on('*', function(btn){ playSoundFor(btn, 3); });
+            button3.mode = "aftertouch";
+            
+            button4.on('*', xyActions);
+            button4.on('*', function(btn){ playSoundFor(btn, 4); });
+            button4.mode = "aftertouch";
+            
+            button5.on('*', xyActions);
+            button5.on('*', function(btn){ playSoundFor(btn, 5); });
+            button5.mode = "aftertouch";
+            
+            button6.on('*', xyActions);
+            button6.on('*', function(btn){ playSoundFor(btn, 6); });
+            button6.mode = "aftertouch";
+            
+            button7.on('*', xyActions);
+            button7.on('*', function(btn){ playSoundFor(btn, 7); });
+            button7.mode = "aftertouch";
+            
+            button8.on('*', xyActions);
+            button8.on('*', function(btn){ playSoundFor(btn, 8); });
+            button8.mode = "aftertouch";
+            
+            button9.on('*', xyActions);
+            button9.on('*', function(btn){ playSoundFor(btn, 9); });
+            button9.mode = "aftertouch";
+
+
+
+
+
+
+            
+            
            }
     
+
+var playSoundFor = function(btn, playerNumber) {
     
-    
-    
-    
-    
-    var pressActions = function(event) {
-        if (event.press == 1)
-        {
-            console.log("boop");
-            multiPlayer.start(1);
-            //player1.start();
-        }
+         if (btn.press == 1)
+         {
+            console.log(playerNumber);
+            player[playerNumber].start();
+         }
     }
+    /*
+<!--    var pressActions = function(event) {-->
+<!--        -->
+<!--        if (event.press == 1)-->
+<!--        {-->
+<!--            console.log("boop");-->
+<!--            player[1].start();-->
+<!--            -->
+<!--        -->
+<!--        }-->
+<!--    }-->
     
-    
+    */
     var xyActions = function(event) {
         console.log( event.x + " " + event.y );
         
@@ -114,9 +186,20 @@
         //{
         //  console.log("under");
         //}
-    } 
+    }
     
+<!--    function padActions(event){-->
+<!--        var x = event.target.tagName;-->
+<!--        consle.log(x);-->
+<!--        var padThatWasClicked = event.target;-->
+<!--        var padIndexInArray = buttons.indexOf(padThatWasClicked);-->
+<!--        -->
+<!--       -->
+<!--        player[padIndexInArray].start();-->
+<!--    }-->
+
+
         </script>
     
     
-</html>    
+</html>
