@@ -30,12 +30,20 @@
         
         div#controlBar {
             border: 2px solid black;
+            width: 50%;
+            height: 20%;
+            background-color: grey;
             
+        }
+        
+        div#help {
+            border: 2px solid black;
             width: 50%;
             height: 20%;
             background-color: grey;
             overflow: hidden;
         }
+
         
         canvas[nx="button"] {
             width: 30%;
@@ -60,11 +68,17 @@
             <canvas nx="button"></canvas>
             <canvas nx="button"></canvas>
             <canvas nx="button"></canvas>
+            <canvas nx="toggle"></canvas>
         </div>
     
         <div id="controlBar">
            <canvas nx="tabs"></canvas>
+           
        </div>
+        
+        <div id="help">
+            <canvas nx="toggle"></canvas>
+        </div>
 
     </body>
     <script>
@@ -94,7 +108,11 @@
         player[8] = new Tone.Player("samples/kit1/8.wav").toMaster();
         player[9] = new Tone.Player("samples/kit1/9.wav").toMaster();
         
-        
+        //Reverb Setup
+        var reverbFX = new Tone.Freeverb();
+        reverbFX.dampening.value = 1000;
+        reverbFX.receive("reverbBus");
+        reverbFX.connect(Tone.Master);
 
 
            nx.onload = function() {
@@ -108,7 +126,9 @@
 <!--                   buttons[i].on('*', pressActions);-->
 <!--               }-->
 */
-            //set up Event listeners
+//////////////////////////////// EVENT LISTENERS ////////////////////////////
+
+            //Buttons
             button1.on('*', xyActions);
             button1.on('*', function(btn){ playSoundFor(btn, 1); });
             button1.mode = "aftertouch";
@@ -145,17 +165,14 @@
             button9.on('*', function(btn){ playSoundFor(btn, 9); });
             button9.mode = "aftertouch";
 
-
-
-
-
-
-            
+            //Help Toggle
+            toggle1.on('*', helpFunction);
             
            }
     
+//////////////////////////////// CALLBACK FUNCTIONS ////////////////////////////
 
-var playSoundFor = function(btn, playerNumber) {
+    var playSoundFor = function(btn, playerNumber) {
     
          if (btn.press == 1)
          {
@@ -163,61 +180,37 @@ var playSoundFor = function(btn, playerNumber) {
             player[playerNumber].start();
          }
     }
-    /*
-<!--    var pressActions = function(event) {-->
-<!--        -->
-<!--        if (event.press == 1)-->
-<!--        {-->
-<!--            console.log("boop");-->
-<!--            player[1].start();-->
-<!--            -->
-<!--        -->
-<!--        }-->
-<!--    }-->
-    
-    */
+
+
     var xyActions = function(event) {
         console.log( event.x + " " + event.y );
-        
-        //if ( event.y > 0.2 ) {
-        //  console.log("over");
-        //}
-        //else
-        //{
-        //  console.log("under");
-        //}
+        if ( event.y > 0.2 )
+        {
+          console.log("over");
+          //player[1].send("reverbBus", event.y);
+        }
+        else
+        {
+          console.log("under");
+        }
     }
     
-<!--    function padActions(event){-->
-<!--        var x = event.target.tagName;-->
-<!--        consle.log(x);-->
-<!--        var padThatWasClicked = event.target;-->
-<!--        var padIndexInArray = buttons.indexOf(padThatWasClicked);-->
-<!--        -->
-<!--       -->
-<!--        player[padIndexInArray].start();-->
-<!--    }-->
+    var helpFunction = function(event){
+         console.log(event);
+         if(event.value ==1)
+        {
+        alert("WELCOME TO THE UNSTABLE DRUM MACHINE \n How")
+        }
+        else
+        {
+            console.log("L4u")
+        }
+    
+    }
+    
 
 
         </script>
-      <script>
-    // ios web audio context is muted by default
-    // workaround is to make a touchstart trigger an audio source
-    window.addEventListener('touchstart',
-      function() { 
-        // create empty buffer
-        var buffer = Tone.context.createBuffer(1, 1, 22050);
-        var source = Tone.context.createBufferSource();
-        source.buffer = buffer; 
-      
-      // connect to output (your speakers) 
-      source.connect(Tone.context.destination); 
-      
-      // play the file
-      source.start();
-      source.noteOn(0); 
-    }, false);
-  </script>
-  
+    
     
 </html>
