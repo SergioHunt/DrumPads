@@ -100,13 +100,13 @@
         //Temporary Player Setup code
         player[1] = new Tone.Player("samples/Kit1/1.wav").toMaster();
         player[2] = new Tone.Player("samples/Kit1/2.wav").toMaster();
-        player[3] = new Tone.Player("samples/kit1/3.wav").toMaster();
-        player[4] = new Tone.Player("samples/kit1/4.wav").toMaster();
-        player[5] = new Tone.Player("samples/kit1/5.wav").toMaster();
-        player[6] = new Tone.Player("samples/kit1/6.wav").toMaster();
-        player[7] = new Tone.Player("samples/kit1/7.wav").toMaster();
-        player[8] = new Tone.Player("samples/kit1/8.wav").toMaster();
-        player[9] = new Tone.Player("samples/kit1/9.wav").toMaster();
+        player[3] = new Tone.Player("samples/Kit1/3.wav").toMaster();
+        player[4] = new Tone.Player("samples/Kit1/4.wav").toMaster();
+        player[5] = new Tone.Player("samples/Kit1/5.wav").toMaster();
+        player[6] = new Tone.Player("samples/Kit1/6.wav").toMaster();
+        player[7] = new Tone.Player("samples/Kit1/7.wav").toMaster();
+        player[8] = new Tone.Player("samples/Kit1/8.wav").toMaster();
+        player[9] = new Tone.Player("samples/Kit1/9.wav").toMaster();
         
         //Reverb Setup
         var reverbFX = new Tone.Freeverb();
@@ -183,10 +183,16 @@
 
 
     var xyActions = function(event) {
-        console.log( event.x + " " + event.y );
+        //console.log( event.x + " " + event.y );
+        var yPos = event.y / window.innerHeight;
+        var xPos = event.y / window.innerWidth;
+        
+        console.log(yPos);
         if ( event.y > 0.2 )
         {
           console.log("over");
+          
+          
           //player[1].send("reverbBus", event.y);
         }
         else
