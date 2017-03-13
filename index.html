@@ -21,36 +21,39 @@
         
         div#padArea {
             width: 100%;
-            height: 80%;
+            height: 90%;
             background-color: #b0e0e6;
             overflow: hidden;
-            padding:0px;
+            padding:10px;
             
         }
         
         div#controlBar {
-            border: 2px solid black;
-            width: 50%;
-            height: 20%;
+            border: px solid black;
+            width: 100%;
+            height: 10%;
             background-color: grey;
             
         }
         
-        div#help {
-            border: 2px solid black;
-            width: 50%;
-            height: 20%;
-            background-color: grey;
-            overflow: hidden;
-        }
-
-        
         canvas[nx="button"] {
-            width: 30%;
-            height: 30%;
+            width: 33%;
+            height: 33%;
         }
-        </style>
+        
+        canvas[nx="toggle"] {
+            padding: 1px;
+           right: 0;
+        }
+        
+        canvas[nx="tabs"] {
+            padding: 1px;
+            right: 0;
+        }
+        
+    </style>
     </head>
+    
     <body id="mainBody">
         
         
@@ -68,22 +71,21 @@
             <canvas nx="button"></canvas>
             <canvas nx="button"></canvas>
             <canvas nx="button"></canvas>
-            <canvas nx="toggle"></canvas>
+            
         </div>
     
         <div id="controlBar">
            <canvas nx="tabs"></canvas>
-           
+           tabs1.options[1] = "hi"
+           <canvas nx="toggle"></canvas>
+
        </div>
         
-        <div id="help">
-            <canvas nx="toggle"></canvas>
-        </div>
-
+      
     </body>
     <script>
         
-              //set up player
+        //set up players
         var player = [];
         var buttons = [];
         
@@ -91,42 +93,33 @@
         for(var i=1; i<=9; i++) {
             buttons[i] = document.getElementById("button"+i);
         }
-    /*
-       for(var i=1; i<=9; i++){
-            player[i] = new Tone.Player("samples/Kit" + i + "/" + i + ".wav").toMaster();
-       }
-      */
     
-        //Temporary Player Setup code
-        player[1] = new Tone.Player("samples/Kit1/1.wav").toMaster();
-        player[2] = new Tone.Player("samples/Kit1/2.wav").toMaster();
-        player[3] = new Tone.Player("samples/Kit1/3.wav").toMaster();
-        player[4] = new Tone.Player("samples/Kit1/4.wav").toMaster();
-        player[5] = new Tone.Player("samples/Kit1/5.wav").toMaster();
-        player[6] = new Tone.Player("samples/Kit1/6.wav").toMaster();
-        player[7] = new Tone.Player("samples/Kit1/7.wav").toMaster();
-        player[8] = new Tone.Player("samples/Kit1/8.wav").toMaster();
-        player[9] = new Tone.Player("samples/Kit1/9.wav").toMaster();
-        
+    //load Kit to Buffers
+    var loadKit = function (kitNumber)
+    {
+       for(var i=1; i<=9; i++)
+       {
+           //console.log ("samples/Kit1/" + i + ".wav");
+            player[i] = new Tone.Player ("samples/Kit1/" + i + ".wav").toMaster();
+       }
+    }
+    
+    loadKit(1);
+    
         //Reverb Setup
         var reverbFX = new Tone.Freeverb();
         reverbFX.dampening.value = 1000;
         reverbFX.receive("reverbBus");
         reverbFX.connect(Tone.Master);
 
+//////////////////////////////// EVENT LISTENERS ////////////////////////////
 
-           nx.onload = function() {
+           nx.onload = function()
+           {
                
                for(var i=1; i<=9; i++) {
                    buttons[i] = document.getElementById("button"+i);
                }
-                    /*
-<!--               for(var i=1; i<=9; i++) {-->
-<!--                   buttons[i].on('*', xyActions);-->
-<!--                   buttons[i].on('*', pressActions);-->
-<!--               }-->
-*/
-//////////////////////////////// EVENT LISTENERS ////////////////////////////
 
             //Buttons
             button1.on('*', xyActions);
@@ -172,28 +165,63 @@
     
 //////////////////////////////// CALLBACK FUNCTIONS ////////////////////////////
 
-    var playSoundFor = function(btn, playerNumber) {
-    
+    var playSoundFor = function(btn, playerNumber)
+    {
+        var deltaY = InitialyPos;
+        var deltax = InitialxPos;
+
+        var InitialyPos = event.y;
+        var InitialxPos = event.x;
+
+
          if (btn.press == 1)
          {
-            console.log(playerNumber);
+            var InitialyPos = btn.y;
+            //console.log(playerNumber);
             player[playerNumber].start();
+            
+            if ( event.y > 0.2 )
+            {
+                console.log("over");
+                
+                
+                //player[1].send("reverbBus", -40);
+            }
+
+            
          }
     }
 
-
-    var xyActions = function(event) {
-        //console.log( event.x + " " + event.y );
-        var yPos = event.y / window.innerHeight;
-        var xPos = event.y / window.innerWidth;
+    var button4Ypos = 0;
+    
+    
+    var xyActions = function(event)
+    {
+        console.log( event.x + " " + event.y );
+        //console.log ("Yes" + button1);
+        //console.log();
         
-        console.log(yPos);
+        //console.log(JSON.stringify(button1.offset))
+        var yPos = event.y // button1.innerHeight;
+        var xPos = event.x // button1.innerWidth;
+<!--        console.log("ypos:" + yPos)-->
+<!--        console.log("xpos:")-->
+<!--        if (button1.deltaMove != undefined)-->
+<!--        {-->
+    
+<!--            console.log("ypos:" + yPos)-->
+<!--           -->
+<!--        }-->
+
+        
+        
+        //console.log(yPos);
         if ( event.y > 0.2 )
         {
           console.log("over");
           
           
-          //player[1].send("reverbBus", event.y);
+          //player[1].send("reverbBus", -40);
         }
         else
         {
@@ -201,6 +229,7 @@
         }
     }
     
+    //Help Button Function
     var helpFunction = function(event){
          console.log(event);
          if(event.value ==1)
@@ -214,8 +243,6 @@
     
     }
     
-
-
         </script>
     
     
