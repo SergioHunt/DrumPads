@@ -35,9 +35,13 @@
         </div>
     
         <div id="controlBar">
+           
+
            <canvas nx="tabs"></canvas>
            <img id="logo" src="Logo.png" alt="logo" height="100%" width="30%">
-           <canvas nx="toggle"></canvas>
+           <canvas nx="toggle" label="Help" labelAlign = "right">
+               
+           </canvas>
            
        </div>
         
@@ -157,7 +161,7 @@
             
             //Help Toggle
             toggle1.on('*', helpFunction);
-            
+           
             //Kit Tabs
             tabs1.on('*', kitSelect);
             
@@ -178,13 +182,9 @@
     var helpFunction = function(event){
          console.log(event);
          if(event.value ==1)        {
-        alert("WELCOME TO THE UNSTABLE DRUM MACHINE \n How")
+        alert("WELCOME TO THE UNSTABLE DRUM MACHINE \n Press Drum Pads to Trigger Sounds \n Hold Drum Pads until the background colour changes green to record. Keep holding the Pad while recording and press again to trigger sound \n To change Kit press the option tabs, Kit 3 is a blank template for you to record your sounds")
         }
-        else
-        {
-            console.log("L4u")
-        }
-    
+         
     }
     
     //Kit Select Function
@@ -330,4 +330,5 @@
     
     
 </html>
+
 
