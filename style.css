@@ -1,8 +1,7 @@
-body, html {
+        body, html {
                 
             width: 100%;
             height: 100%;
-            background-color: rgb(100,200,200);
             margin: 0;
             padding: 0;
 
@@ -18,24 +17,36 @@ body, html {
         }
         
         div#controlBar {
-            border: px solid black;
             width: 100%;
             height: 10%;
             background-color: grey;
+            margin:0 auto;
             
         }
         
         canvas[nx="button"] {
             width: 33%;
             height: 33%;
+            
         }
         
         canvas[nx="toggle"] {
-            padding: 1px;
-            right: 0;
+            position: relative;
+            
+            
+            width: 20%;
+            height: 100%;
+            
+            padding: 2px;
         }
         
         canvas[nx="tabs"] {
-            padding: 1px;
+            width: 33%;
+            height: 100%;
+
+            padding: 2px;
             right: 0;
         }
+    
+    
+        
