@@ -48,7 +48,7 @@
         //set up players
         var kitplayer = [];
         
-        //Global Counter for Button Hold Timer 
+        //Global Counter
         var count;
         
         
@@ -83,24 +83,27 @@
             audio: true,
             video: false,
         };
-
+    
+    
+        //sucessful stream action
         function streamActions(stream){
         console.log("Streaming");
         window.audioContext = new AudioContext();
-        window.userMediaStream = stream;
+        var userMediaStream = stream;
         window.mediaStreamSource = audioContext.createMediaStreamSource(stream);
         window.analyser = audioContext.createAnalyser();
         
         //SetFFTSize
+        //This is maximum size of fft analyser window which = 0.74 second clip at 44.1hz
         analyser.fftSize = 32768;
-        //2048
-        window.mediaStreamSource.connect( analyser );
         
+        window.mediaStreamSource.connect( analyser );
         
         };
     
+        // Stream fail action
         function streamFailActions(error){
-        console.log("error" + error);
+        console.log("Unable to Access Microphone" + error);
         }
     
         // start streaming from the microphone
@@ -109,44 +112,45 @@
        
 //////////////////////////////// EVENT LISTENERS ////////////////////////////
 
+        // Nexus UI onload Setup
            nx.onload = function()
            {
-  
+
             //Buttons
             
-            button1.on('*', function(btn){ RecordSound(btn, 1); });
+            button1.on('*', function(btn){ ButtonActions(btn, 1); });
             button1.mode = "aftertouch";
             
             
-            button2.on('*', function(btn){ RecordSound(btn, 2); });
+            button2.on('*', function(btn){ ButtonActions(btn, 2); });
             button2.mode = "aftertouch";
             
             
-            button3.on('*', function(btn){ RecordSound(btn, 3); });
+            button3.on('*', function(btn){ ButtonActions(btn, 3); });
             button3.mode = "aftertouch";
             
             
-            button4.on('*', function(btn){ RecordSound(btn, 4); });
+            button4.on('*', function(btn){ ButtonActions(btn, 4); });
             button4.mode = "aftertouch";
             
             
-            button5.on('*', function(btn){ RecordSound(btn, 5); });
+            button5.on('*', function(btn){ ButtonActions(btn, 5); });
             button5.mode = "aftertouch";
             
             
-            button6.on('*', function(btn){ RecordSound(btn, 6); });
+            button6.on('*', function(btn){ ButtonActions(btn, 6); });
             button6.mode = "aftertouch";
             
             
-            button7.on('*', function(btn){ RecordSound(btn, 7); });
+            button7.on('*', function(btn){ ButtonActions(btn, 7); });
             button7.mode = "aftertouch";
             
             
-            button8.on('*', function(btn){ RecordSound(btn, 8); });
+            button8.on('*', function(btn){ ButtonActions(btn, 8); });
             button8.mode = "aftertouch";
             
             
-            button9.on('*', function(btn){ RecordSound(btn, 9); });
+            button9.on('*', function(btn){ ButtonActions(btn, 9); });
             button9.mode = "aftertouch";
             
             
@@ -160,25 +164,12 @@
     
 //////////////////////////////// CALLBACK FUNCTIONS ////////////////////////////
 
-//     var playSoundFor = function(btn, playerNumber)
-//     {
-//          if (btn.press == 1)
-//          {
-//             var InitialyPos = btn.y;
-//             //console.log(playerNumber);
-//             kitplayer[playerNumber].start();
+    var playSoundFor = function(btn, playerNumber)
+    {
+        
             
-//             if (event.y > 0.2 )
-//             {
-//                 console.log("over");
-//                 //player[1].send("reverbBus", -40);
-//             }
-//             else
-//             {
-//                 console.log("under");
-//             }
-//          }
-//     }
+            
+    }
 
 
     
@@ -212,6 +203,7 @@
         if (tabs1.val.index == 2)
         {
             console.log("loaded kit 3");
+            //Enpty Kit to fill with recorded sounds
             loadKit(3);
         }
         
@@ -235,20 +227,27 @@
     function timerCallback(){
         console.log(count)
         count = count + 1
+        
+        if(count == 3){
+            //The color change feedback has been put on counter = 3 to allow for better user timing
+            //when recording
+            document.getElementById("padArea").style.background =  "#00ff00"
+        }
+    
+
         if(count == 4){
-            recordAndSetTestPlayer();
             //Write Audio BUFFFEEERRRR to Tone JS player
+            recordAndSetPlayer();
             
         }
     }
 
     
-    var RecordSound = function(btn, playerNumber)
+    var ButtonActions = function(btn, playerNumber)
     {
-        
+        //Do some stuff with press on and off
         if (btn.press == 1 ) //(btn. > 0.2)
         {
-            
             console.log("timer started");
             //Assigns GlobPlayerIndex for use in recording to player number.
             GlobplayerIndex = playerNumber
@@ -256,21 +255,33 @@
            
             //Testplayer.start();
             kitplayer[playerNumber].start();
-            
-           
         }
         
         if (btn.press == 0 ) //(btn. > 0.2)
         {
             clearInterval(timer);
-            console.log("restarted interval");
-            //stopRecording();
+            console.log("restarted timer");
+            //stopRecording
+            //Change Colour back to Default Blue
+            document.getElementById("padArea").style.background = "#00ffff"
         }
+        
+        //Do some stuff with X Y aftertouch
+        if (event.y > 0.2 )
+        {
+            //console.log("over");
+            //player[1].send("reverbBus", -40);
+        }
+        else
+        {
+            //console.log("under");
+        }
+
 
     }
     
    
-    function recordAndSetTestPlayer(){
+    function recordAndSetPlayer(){
         console.log("recording");
         // we aim to put our audio data into an AudioBuffer
         // but we must first retrieve sampled data from the analyser node
@@ -297,13 +308,25 @@
         //        (for mono source into a stereo buffer)
         tempAudioBuffer.copyToChannel(audioDataFloat, 0);
         
+        //tempAudioBuffer.copyToChannel(audioDataFloat, 1);
+        
         //write to Player
         //Testplayer.buffer = tempAudioBuffer;
         kitplayer[GlobplayerIndex].buffer = tempAudioBuffer
+        
+        //for Debugging I wanted to see if any data was inside the Buffer
         console.log(tempAudioBuffer);
     }
     
+    
+    
+
+
+
+
+
 </script>
     
     
 </html>
+
