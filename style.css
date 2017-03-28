@@ -1,4 +1,4 @@
-        body, html {
+         body, html {
                 
             width: 100%;
             height: 100%;
@@ -20,7 +20,6 @@
             width: 100%;
             height: 10%;
             background-color: grey;
-            margin:0 auto;
             
         }
         
@@ -30,20 +29,27 @@
             
         }
         
+        canvas[nx="message"] {
+            float: right;
+            width: 20%;
+            height: 100%;
+            
+            padding: 2px;
+        }
+        
         canvas[nx="tabs"] {
             width: 33%;
             height: 100%;
-            padding: 2px;
-            
-        }
-        
-        canvas[nx="message"] {
-            width: 33%;
-            height: 100%;
-            float: right;
+
             padding: 2px;
             right: 0;
         }
     
-    
+    #logo{
         
+        margin-left: auto;
+        margin-right: auto;
+        height: 100%;
+       
+    }
+    
