@@ -40,10 +40,10 @@
             padding: 2px;
         }
         
-        canvas[nx="tabs"] {
+        canvas[nx="message"] 
             width: 33%;
             height: 100%;
-
+            float: right;
             padding: 2px;
             right: 0;
         }
