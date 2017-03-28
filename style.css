@@ -30,7 +30,12 @@
             
         }
         
-       
+        canvas[nx="tabs"] {
+            width: 33%;
+            height: 100%;
+            padding: 2px;
+            
+        }
         
         canvas[nx="message"] {
             width: 33%;
