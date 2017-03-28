@@ -30,15 +30,7 @@
             
         }
         
-        canvas[nx="toggle"] {
-            position: relative;
-            
-            
-            width: 20%;
-            height: 100%;
-            
-            padding: 2px;
-        }
+       
         
         canvas[nx="message"] 
             width: 33%;
